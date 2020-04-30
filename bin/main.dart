@@ -1,5 +1,8 @@
-import 'package:coffee_machine/coffee_machine.dart' as coffee_machine;
-
-void main(List<String> arguments) {
-  print('Hello world: ${coffee_machine.calculate()}!');
+void main() {
+  print('Anda memesan kopi');
+  print('Menggiling biji kopi');
+  print('Memanaskan air');
+  print('Mencampurkan air dengan kopi');
+  print('Menuangkan kopi ke dalam cangkir');
+  print('Kopi Anda telah siap!');
 }
