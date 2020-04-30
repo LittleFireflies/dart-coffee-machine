@@ -1,49 +1,29 @@
 import 'dart:io';
 
-int coffeeBeansStock = 0;
-int waterStock = 0;
-int milkStock = 0;
-int cupStock = 0;
+import 'package:coffee_machine/coffee.dart';
+import 'package:coffee_machine/coffeemachine.dart';
 
-var coffeeNeeded = 12;
-var waterNeeded = 200;
-var milkNeeded = 100;
+void main() async {
+  var coffeeMachine = CoffeeMachine([
+    Coffee(name: 'Cappuccino', coffeeBeans: 12, water: 200, milk: 100),
+    Coffee(name: 'Espresso', coffeeBeans: 16, water: 250, milk: 0),
+    Coffee(name: 'Latte', coffeeBeans: 20, water: 350, milk: 7)
+  ]);
 
-void main() {
-  stdout.write('Berapa gram biji kopi yang ingin Anda masukkan : ');
-  coffeeBeansStock = num.parse(stdin.readLineSync());
-  stdout.write('Berapa ml air yang ingin Anda masukkan : ');
-  waterStock = num.parse(stdin.readLineSync());
-  stdout.write('Berapa ml susu yang ingin Anda masukkan : ');
-  milkStock = num.parse(stdin.readLineSync());
-  stdout.write('Berapa banyak cup yang ingin Anda masukkan : ');
-  cupStock = num.parse(stdin.readLineSync());
-
-  print('Mesin kopi Anda memiliki $coffeeBeansStock gram biji kopi');
-  print('Mesin kopi Anda memiliki $waterStock ml air');
-  print('Mesin kopi Anda memiliki $milkStock ml susu');
-  print('Mesin kopi Anda memiliki $cupStock cup');
-
-  stdout.write('Berapa cup cappuccino yang ingin Anda buat : ');
-  int totalCups = num.parse(stdin.readLineSync());
-
-  if (isStockEnough(totalCups)) {
-    print('Membuatkan pesanan Anda!');
-  } else {
-    print('Maaf, pesanan Anda tidak tersedia.');
-  }
-}
-
-bool isStockEnough(int cupsToBeMade) {
-  if ((coffeeNeeded * cupsToBeMade) > coffeeBeansStock) {
-    return false;
-  } else if ((waterNeeded * cupsToBeMade) > waterStock) {
-    return false;
-  } else if ((milkNeeded * cupsToBeMade) > milkNeeded) {
-    return false;
-  } else if (cupsToBeMade > cupStock) {
-    return false;
-  } else {
-    return true;
-  }
+  var action = '';
+  do {
+    stdout.write('Pilih Menu (beli, isi, stok, keluar) : ');
+    action = stdin.readLineSync();
+    switch (action) {
+      case 'beli':
+        await coffeeMachine.buyCoffee();
+        break;
+      case 'isi':
+        coffeeMachine.fill();
+        break;
+      case 'stok':
+        coffeeMachine.displayStock();
+        break;
+    }
+  } while (action != 'keluar');
 }
